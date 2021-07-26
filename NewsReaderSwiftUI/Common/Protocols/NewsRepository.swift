@@ -9,5 +9,7 @@ import Foundation
 import Combine
 
 protocol NewsRepository {
-    func fetchNews() -> AnyPublisher<Result<News, ErrorType>, Never>
+    func fetchNews()
+    var news: [Article] { get set }
+    var error: ErrorType? { get set }
 }

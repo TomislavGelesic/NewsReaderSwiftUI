@@ -6,26 +6,30 @@
 //
 
 import SwiftUI
+import UIKit
+import Kingfisher
 
 struct NewsListItemView: View {
     
+    var item: Article
     
-    var body: some View = {
-        HStack {
-            Image(systemName: "photo")
-                .resizable()
+    var body: some View {
+        HStack(spacing: 15) {
+            NetworkImage(imageURL: URL(string: item.imagePath),
+                         placeholderImage: UIImage(systemName: "applelogo")!)
                 .scaledToFit()
                 .frame(width: 100)
             VStack(alignment: .leading, spacing: 20) {
-                Text("\(5)")
+                Spacer()
+                Text("\(item.title)")
                     .fontWeight(.semibold).frame(
                         minWidth: 0,
                         maxWidth: .infinity,
                         minHeight: 0,
                         maxHeight: .infinity,
                         alignment: .topLeading
-                      )
-                Text("description")
+                    )
+                Text("\(item.text)")
                     .font(.subheadline)
                     .foregroundColor(.secondary).frame(
                         minWidth: 0,
@@ -33,7 +37,8 @@ struct NewsListItemView: View {
                         minHeight: 0,
                         maxHeight: .infinity,
                         alignment: .topLeading
-                      )
+                    )
+                Spacer()
             }
         }.frame(
             minWidth: 0,
@@ -41,7 +46,7 @@ struct NewsListItemView: View {
             minHeight: 0,
             maxHeight: .infinity,
             alignment: .topLeading
-          )
-        
-    }()
+        )
+        .padding([.top, .bottom])
+    }
 }

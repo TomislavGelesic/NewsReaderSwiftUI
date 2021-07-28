@@ -20,7 +20,7 @@ public class RestManager {
         return sessionManager
     }()
     
-    static func requestObservable<T: Codable>(url: String) -> AnyPublisher<Result<T, ErrorType>, Never> {
+    static func requestObservable<T: Codable>(url: String, dataType: T.Type) -> AnyPublisher<Result<T, ErrorType>, Never> {
         return Future<Result<T, ErrorType>, Never> { promise in
             AF.request(url)
                 .validate()

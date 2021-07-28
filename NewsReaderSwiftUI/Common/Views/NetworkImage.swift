@@ -41,12 +41,9 @@ public struct NetworkImage: SwiftUI.View {
     }
 }
 
-#if DEBUG
-// swiftlint:disable:next type_name
 struct NetworkImage_Previews: PreviewProvider {
     static var previews: some SwiftUI.View {
         NetworkImage(imageURL: URL(string: "https://www.apple.com/favicon.ico")!,
                      placeholderImage: UIImage(systemName: "bookmark")!)
     }
 }
-#endif

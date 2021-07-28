@@ -17,17 +17,23 @@ struct NewsView: View {
     
     var body: some View {
         NavigationView {
-            List(newsViewModel.articles) { article in
-                NewsListItemView(item: article)
+            List {
+                ForEach(newsViewModel.articles, id: \.id) { article in
+                    NewsListItemView(article: article)
+                        .background(Rectangle().fill(Color.white).shadow(radius: 8))
+                        .padding()
+                }
+                
             }
             .navigationTitle(Text("NewsReaderApp"))
             .navigationBarTitleDisplayMode(.inline)
+            
         }
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
+struct NewsView_Previews: PreviewProvider {
     static var previews: some View {
-        NewsView(newsViewModel: NewsViewModel())
+        return NewsView(newsViewModel: NewsViewModel())
     }
 }

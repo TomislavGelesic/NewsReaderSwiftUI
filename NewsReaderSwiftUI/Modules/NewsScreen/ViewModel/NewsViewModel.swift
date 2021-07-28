@@ -11,29 +11,33 @@ import Alamofire
 
 class NewsViewModel: ObservableObject {
     
-    @Published var articles: [Article] = .init()
+    @Published var articles: [Article] = [
+        Article.getTestable(),
+        Article.getTestable(),
+        Article.getTestable(),
+        Article.getTestable(),
+        Article.getTestable(),
+        Article.getTestable()
+    ]
     
     init() {
         reloadNews()
     }
     
     func reloadNews() {
-        AF
-            .request(RestEndpoints.news.endpoint())
-            .validate()
-            .responseData { [unowned self] response in
-                if let responseData = response.data {
-                    do {
-                        let parsedData = try JSONDecoder().decode(NewsResponse.self, from: responseData)
-                        if let newArticles = self.createArticles(from: parsedData) {
-                            DispatchQueue.main.async {
-                                self.articles = newArticles
-                            }
-                        }
-                    }
-                    catch { }
+        let publisher: AnyPublisher<Result<NewsResponse, ErrorType>, Never> =
+            RestManager.requestObservable(url: RestEndpoints.news.endpoint(), dataType: NewsResponse.self)
+        
+        publisher
+            .map { [unowned self] result -> [Article] in
+                switch result {
+                case .success(let response):
+                    return self.createArticles(from: response) ?? [Article]()
+                case .failure(_):
+                    return [Article]()
                 }
             }
+            .assign(to: &$articles)
     }
     
     func createArticles(from newsResponse: NewsResponse) -> [Article]? {
@@ -41,7 +45,7 @@ class NewsViewModel: ObservableObject {
         for article in newsResponse.articles {
             newArticles.append(Article(id: UUID(),
                                        title: article.title,
-                                       text: article.description,
+                                       description: article.description,
                                        imagePath: article.urlToImage))
         }
         return newArticles.isEmpty ? nil : newArticles

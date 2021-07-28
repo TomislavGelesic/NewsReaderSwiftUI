@@ -11,42 +11,46 @@ import Kingfisher
 
 struct NewsListItemView: View {
     
-    var item: Article
+    var article: Article
     
     var body: some View {
-        HStack(spacing: 15) {
-            NetworkImage(imageURL: URL(string: item.imagePath),
-                         placeholderImage: UIImage(systemName: "applelogo")!)
-                .scaledToFit()
-                .frame(width: 100)
-            VStack(alignment: .leading, spacing: 20) {
-                Spacer()
-                Text("\(item.title)")
-                    .fontWeight(.semibold).frame(
-                        minWidth: 0,
-                        maxWidth: .infinity,
-                        minHeight: 0,
-                        maxHeight: .infinity,
-                        alignment: .topLeading
+        ZStack {
+            NavigationLink(destination: NewsDetails(article: article)) {
+                EmptyView()
+            }.hidden()
+            
+            VStack(alignment: .center, spacing: 10) {
+                NetworkImage(imageURL: URL(string: article.imagePath),
+                             placeholderImage: UIImage(systemName: "applelogo")!)
+                    .frame(minWidth: 200, idealWidth: .infinity, maxWidth: .infinity, minHeight: 150, idealHeight: 200, maxHeight: 200)
+                    .scaledToFit()
+                Text("\(article.title)")
+                    .fontWeight(.semibold)
+                    .frame(minWidth: 0,
+                           maxWidth: .infinity,
+                           alignment: .topLeading
                     )
-                Text("\(item.text)")
+                    .lineLimit(2)
+                    .padding([.leading, .trailing])
+                Text("\(article.description)")
                     .font(.subheadline)
-                    .foregroundColor(.secondary).frame(
-                        minWidth: 0,
-                        maxWidth: .infinity,
-                        minHeight: 0,
-                        maxHeight: .infinity,
-                        alignment: .topLeading
+                    .foregroundColor(.secondary)
+                    .frame(minWidth: 0,
+                           maxWidth: .infinity,
+                           alignment: .topLeading
                     )
-                Spacer()
+                    .lineLimit(3)
+                    .padding([.leading, .trailing])
             }
-        }.frame(
-            minWidth: 0,
-            maxWidth: .infinity,
-            minHeight: 0,
-            maxHeight: .infinity,
-            alignment: .topLeading
-        )
-        .padding([.top, .bottom])
+        }
+    }
+}
+
+struct NewsListItemView_Previews: PreviewProvider {
+    static var previews: some SwiftUI.View {
+        NewsListItemView(article: Article(id: UUID(),
+                                          title: "test title",
+                                          description: "test text",
+                                          imagePath: ""))
     }
 }

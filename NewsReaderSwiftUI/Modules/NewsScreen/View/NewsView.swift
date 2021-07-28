@@ -23,7 +23,6 @@ struct NewsView: View {
                         .background(Rectangle().fill(Color.white).shadow(radius: 8))
                         .padding()
                 }
-                
             }
             .navigationTitle(Text("NewsReaderApp"))
             .navigationBarTitleDisplayMode(.inline)

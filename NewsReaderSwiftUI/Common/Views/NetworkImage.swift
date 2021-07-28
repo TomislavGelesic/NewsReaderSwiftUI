@@ -24,6 +24,11 @@ public struct NetworkImage: SwiftUI.View {
             .onAppear(perform: loadImage)
             .transition(.opacity)
             .id(image ?? placeholderImage)
+            .aspectRatio(contentMode: .fit)
+            .frame(minWidth: 0,
+                   maxWidth: (image != nil) ? .infinity : 150,
+                   minHeight: (image != nil) ? nil : 150,
+                   maxHeight: (image != nil) ? nil : 150)
     }
     
     private func loadImage() {

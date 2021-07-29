@@ -25,10 +25,7 @@ class NewsViewModel: ObservableObject {
     }
     
     func reloadNews() {
-        let publisher: AnyPublisher<Result<NewsResponse, ErrorType>, Never> =
             RestManager.requestObservable(url: RestEndpoints.news.endpoint(), dataType: NewsResponse.self)
-        
-        publisher
             .map { [unowned self] result -> [Article] in
                 switch result {
                 case .success(let response):

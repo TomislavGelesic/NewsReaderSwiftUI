@@ -21,7 +21,7 @@ struct NewsListItemView: View {
             
             VStack(alignment: .center, spacing: 10) {
                 NetworkImage(imageURL: URL(string: article.imagePath),
-                             placeholderImage: UIImage(systemName: "applelogo")!)
+                             placeholderImage: UIImage(systemName: "photo")!)
                     
                 Text("\(article.title)")
                     .fontWeight(.semibold)

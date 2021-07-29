@@ -14,7 +14,7 @@ struct NewsDetails: View {
     var body: some View {
         VStack {            
             NetworkImage(imageURL: URL(string: article.imagePath),
-                         placeholderImage: UIImage(systemName: "applelogo")!)
+                         placeholderImage: UIImage(systemName: "photo")!)
             Text(article.title)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
